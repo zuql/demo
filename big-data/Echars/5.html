@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<HTML>
+	<head>
+		<meta charset="utf-8">
+		<script type="text/javascript" src="echarts.js"></script>
+		<script type="text/javascript">
+			window.onload=function(){
+				var myChart = echarts.init(document.getElementById("e1_div"))
+				var option = {
+					visualMap: [
+								{
+									type: 'continuous',
+									min: 100,
+									max: 500,
+									dimension: 0,    
+									seriesIndex: 0,    
+									inRange: {        
+										color: ['blue',  'red'], 
+										symbolSize: [30, 100]             
+									},
+									outOfRange: {       // 选中范围外的视觉配置
+										symbolSize: [30, 100]
+									}
+								}
+						],
+					series : [
+						{
+							name: '访问来源',
+							type: 'pie',
+							radius: '55%',
+							roseType: 'radius',
+							data:[
+									{value:235, name:'视频广告'},
+									{value:274, name:'联盟广告'},
+									{value:310, name:'邮件营销'},
+									{value:335, name:'直接访问'},
+									{value:400, name:'搜索引擎'},
+								]
+						}
+					]
+				}
+				myChart.setOption(option)
+			}
+		</script>
+	</head>
+	<body>
+		<div id="e1_div" style="width: 600px;height:400px;"></div>
+	</body>
+</HTML>
+	

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pt.member.dao.MemberDao">
+    <select id="findObjects" resultType="com.pt.member.entity.Member">
+        select * from t_members
+    </select>
+    <!-- 定义insert元素，其中parameterType可以不写，
+         #{}表达式会调用参数对象的get方法 -->
+    <insert id="insertObject"
+            parameterType="com.pt.member.entity.Member">
+        insert into t_members
+        (nickname,password,realname,gender,rank,
+         email,mobile,safequestion,safeanswer,createdTime)
+        values
+        (#{nickname},#{password},#{realname},#{gender},#{rank},
+         #{email},#{mobile},#{safequestion},#{safeanswer},#{createdTime})
+    </insert>
+
+</mapper>

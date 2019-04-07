@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<HTML>
+	<head>
+		<meta charset="utf-8">
+		<script type="text/javascript" src="echarts.js"></script>
+		<script type="text/javascript">
+			var myChart = null
+			window.onload=function(){
+				myChart = echarts.init(document.getElementById("e1_div"))
+				option = {
+					xAxis: {
+						type: 'category',
+						boundaryGap: false,
+						data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+					},
+					yAxis: {
+						type: 'value'
+					},
+					series: [{
+						data: [820, 932, 901, 934, 1290, 1330, 1320],
+						type: 'line',
+						areaStyle: {}
+						}]
+					};
+
+				myChart.setOption(option)
+			};
+			function changeData(){
+				myChart.setOption({
+						xAxis: {
+							type: 'category',
+							boundaryGap: false,
+							data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+						},
+						yAxis: {
+							type: 'value'
+						},
+						series: [{
+							data: [720, 1032, 601, 334, 1590, 30, 320],
+							type: 'line',
+							areaStyle: {}
+						}]
+					});
+			}
+		</script>
+	</head>
+	<body>
+		<div id="e1_div" style="width: 600px;height:400px;"></div>
+		<input type="button" value="点我" onclick="changeData()"/>
+	</body>
+</HTML>
+	

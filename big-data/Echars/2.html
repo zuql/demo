@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<HTML>
+	<head>
+		<meta charset="utf-8">
+		<script type="text/javascript" src="echarts.js"></script>
+		<script type="text/javascript">
+			window.onload=function(){
+				var myChart = echarts.init(document.getElementById("e1_div"))
+				var option = {
+					backgroundColor: 'lightgray',
+					textStyle:{
+						color:"black"
+					},
+					series : [
+						{
+							name: '访问来源',
+							type: 'pie',
+							radius: '55%',
+							roseType: 'radius',
+							data:[
+									{value:235, name:'视频广告',itemStyle:{color:'red'}},
+									{value:274, name:'联盟广告',itemStyle:{color:'yellow'}},
+									{value:310, name:'邮件营销',itemStyle:{color:'blue'}},
+									{value:335, name:'直接访问',itemStyle:{color:'green'}},
+									{value:400, name:'搜索引擎',itemStyle:{color:'pink'}},
+								],
+							itemStyle:{
+								color:'red',
+								// 阴影的大小
+								shadowBlur: 500,
+								// 阴影水平方向上的偏移
+								shadowOffsetX: 20,
+								// 阴影垂直方向上的偏移
+								shadowOffsetY: 20,
+								// 阴影颜色
+								shadowColor: 'pink'
+							}
+						}
+					]
+				}
+				myChart.setOption(option)
+			}
+		</script>
+	</head>
+	<body>
+		<div id="e1_div" style="width: 600px;height:400px;"></div>
+	</body>
+</HTML>
+	

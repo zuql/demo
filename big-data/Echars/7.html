@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<HTML>
+	<head>
+		<meta charset="utf-8">
+		<script type="text/javascript" src="echarts.js"></script>
+		<script type="text/javascript" src="jquery.js"></script>
+		<script type="text/javascript">
+			window.onload=function(){
+				var myChart = echarts.init(document.getElementById("e1_div"))
+				var option = {
+					xAxis: {
+						type: 'category',
+						boundaryGap: false,
+						data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+					},
+					yAxis: {
+						type: 'value'
+					},
+					series: [{
+						data: [820, 932, 901, 934, 1290, 1330, 1320],
+						type: 'line',
+						areaStyle: {}
+					}]
+				};
+
+				myChart.setOption(option)
+
+				window.setInterval(function(){
+					$.get("http://localhost/EchartsDemo/servlet/NewDataServlet",function(datax,status){
+						option.series[0].data = [1, 2, 3, 934, 1290, 1330, 1320]
+					})
+				}, 1000);
+			};
+
+			
+		</script>
+	</head>
+	<body>
+		<div id="e1_div" style="width: 600px;height:400px;"></div>
+	</body>
+</HTML>
+	

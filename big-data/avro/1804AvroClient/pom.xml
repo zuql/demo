@@ -1,0 +1,78 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>cn.tarena</groupId>
+  <artifactId>avro-add-contract</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>avro-add-contract</name>
+  <url>http://maven.apache.org</url>
+
+  <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <compiler-plugin.version>2.3.2</compiler-plugin.version>
+        <avro.version>1.7.5</avro.version>
+    </properties>
+  <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.10</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>1.6.4</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.avro</groupId>
+            <artifactId>avro</artifactId>
+            <version>1.7.5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.avro</groupId>
+            <artifactId>avro-ipc</artifactId>
+            <version>1.7.5</version>
+        </dependency>
+    </dependencies>
+   <build>
+  <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${compiler-plugin.version}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.avro</groupId>
+                <artifactId>avro-maven-plugin</artifactId>
+                <version>1.7.5</version>
+                <executions>
+                <!--Maven的构建工具是有生命周期，比如编译、测试、运行、打包等
+                 	每个生命周期都叫做phase(阶段)，phase并不是Maven最基本的单位
+                 	每个pahse还可以细分一个个goal.有些插件的goal，Maven不认识就会报错-->
+                
+                <execution>
+                        <id>schemas</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>schema</goal>
+                            <goal>protocol</goal>
+                            <goal>idl-protocol</goal>
+                        </goals>
+                 <configuration>
+                 		<!-- 使用avro，需要定义模式文件，此参数指的是模式文件存放的源目录-->
+						<sourceDirectory>${project.basedir}/src/main/avro/</sourceDirectory>
+						<!-- 指定avro输出的java类存放的目录 -->
+						<outputDirectory>${project.basedir}/src/main/java/</outputDirectory>
+					</configuration>       
+                 </execution>   
+                    
+                </executions>
+            </plugin>
+        </plugins>
+  </build>
+</project>

@@ -1,0 +1,7 @@
+@namespace("rpc.service")
+protocol AddService{
+import schema "User.avsc";
+int add(int a,int b);
+
+void sendUser(avro.domain.User u);
+}
