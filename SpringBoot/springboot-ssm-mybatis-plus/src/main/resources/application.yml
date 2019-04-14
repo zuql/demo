@@ -1,0 +1,24 @@
+server:
+  port: 7909
+
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/mybatisdb?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    username: root
+    password: root
+
+
+mybatis:
+  mapUnderscoreToCamelCase: true
+  typeAliasesPackage: com.zuql.demo.springbootssmmybatisplus.user.pojo
+  mapperLocations: classpath:mappers/*.xml
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+
+logging:
+  level:
+    cn.jt.mapper: debug
