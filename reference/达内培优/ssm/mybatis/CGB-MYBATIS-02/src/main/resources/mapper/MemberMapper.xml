@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- mybatis中的映射文件:内部要定义sql映射 -->
+<mapper namespace="com.pt.member.dao.MemberDao">
+    <!-- 基于会员id查找会员信息 -->
+    <select id="findById"
+            resultType="com.pt.member.entity.Member">
+           select *
+           from t_members
+           where id=#{id}
+    </select>
+</mapper>
+
+

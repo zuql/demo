@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- mybatis中的映射文件:内部要定义sql映射 -->
+<mapper namespace="com.pt.order.dao.OrderDao">
+    
+     <delete id="deleteObjects">
+          delete from t_orders
+          <where>
+             <if test="ids==null or ids.length==0">
+                id is null
+             </if>
+             <if test="ids!=null and ids.length>0">
+                id in <!--(1,2,3,4)-->
+                <foreach collection="ids"
+                         open="("
+                         close=")"
+                         separator=","
+                         item="id">
+                        #{id}
+                </foreach><!-- 动态sql中的foreach -->
+             </if>
+           </where>
+     </delete>
+       
+       
+     <!-- 基于订单id删除订单元素 -->   
+     <delete id="deleteObject">
+         delete from t_orders
+         where id=#{id}
+     </delete>
+
+ 
+     <insert id="insertObject"
+             parameterType="com.pt.order.entity.Order">
+         <!-- selectKey元素用于获取一个值，何时执行
+                 由元素中的order属性决定，此属性有BEFORE和AFTER两个值
+                 分别代表是在insert之前还是之后执行。 -->
+         <selectKey keyProperty="id"
+                    resultType="int"
+                    order="AFTER">
+             select last_insert_id()
+         </selectKey>
+         insert into t_orders
+         (code,memberId,goodsId,totalPrice,
+         status,remark,createdTime)
+         values    
+         (#{code},#{memberId},#{goodsId},#{totalPrice},
+         #{status},#{remark},now())
+     </insert>
+     
+     <!-- 
+     <insert id="insertObject"
+             parameterType="com.pt.order.entity.Order"
+             useGeneratedKeys="true"
+             keyProperty="id">
+        insert into t_orders
+         (code,memberId,goodsId,totalPrice,
+         status,remark,createdTime)
+         values    
+         (#{code},#{memberId},#{goodsId},#{totalPrice},
+         #{status},#{remark},now())
+     </insert>
+      -->
+     
+     <!-- 查询订单时将订单对应的会员信息也查询出来 -->
+     <!-- 基于用户需求对内容进行动态排序 -->
+     <select id="findPageObjects"
+             parameterType="com.pt.order.vo.SqlOrderCommand"
+             resultMap="orderResultMap">
+            select * 
+            from t_orders
+            <if test="cmd!=null">
+            order by ${cmd.column} ${cmd.type}
+            </if>
+     </select>
+     <resultMap type="com.pt.order.vo.OrderVo"
+                id="orderResultMap">
+            <!--
+                          关联映射(基于memberId查询会员信息
+                          并将其封装到OrderVo对应的Member属性),
+             memberId 查询结果中的字段名
+             select 执行关联查询
+             fetchType： 懒加载(延迟加载，按需加载)
+             -->
+            <association property="member"
+               column="memberId"
+               select="com.pt.member.dao.MemberDao.findById"
+               fetchType="lazy">
+            </association>
+     </resultMap>
+</mapper>
+
+
+
+

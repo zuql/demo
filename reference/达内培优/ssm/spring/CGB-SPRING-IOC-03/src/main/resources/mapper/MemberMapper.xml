@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- mybatis中的映射文件:内部要定义sql映射 -->
+<mapper namespace="com.pt.member.dao.MemberDao">
+
+    <!-- 底层会封装为一个MappedStatement对象 -->
+    <!-- 基于id删除会员信息 -->
+    <delete id="deleteObject"
+            parameterType="int">
+         delete from t_members
+         where id=#{id}        
+    </delete>
+   
+</mapper>

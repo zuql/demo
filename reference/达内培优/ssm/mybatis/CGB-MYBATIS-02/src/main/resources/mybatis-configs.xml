@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<!-- mybatis 核心配置 -->
+<configuration>
+  <!-- 引入属性配置文件 -->
+  <properties resource="configs.properties"/>
+  <!-- 配置mybatis(setting标签内部可以配置日志，缓存,...) -->
+  <settings>
+     <setting name="logImpl" value="log4j"/>
+  </settings>
+  <!-- 配置初始化环境(连接) -->
+  <environments default="development">
+    <environment id="development">
+      <transactionManager type="JDBC"/>
+      <!-- 使用mybatis自带连接池 -->
+      <dataSource type="POOLED">
+        <property name="driver" value="${jdbcDriver}"/>
+        <property name="url"  value="${jdbcUrl}"/>
+        <property name="username" value="${jdbcUser}"/>
+        <property name="password" value="${jdbcPassword}"/>
+      </dataSource>
+    </environment>
+  </environments>
+  <!-- 映射文件配置(定义sql映射) -->
+   <mappers>
+    <mapper resource="mapper/MemberMapper.xml"/>
+    <mapper resource="mapper/OrderMapper.xml"/>
+  </mappers>
+</configuration>
+
+
+
+
+
+
+
+
+
