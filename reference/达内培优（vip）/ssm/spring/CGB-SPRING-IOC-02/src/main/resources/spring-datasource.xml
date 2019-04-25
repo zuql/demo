@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans default-lazy-init="true"
+    xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:aop="http://www.springframework.org/schema/aop" 
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:util="http://www.springframework.org/schema/util"
+    xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+    xsi:schemaLocation="  
+       http://www.springframework.org/schema/beans   
+       http://www.springframework.org/schema/beans/spring-beans-4.3.xsd  
+       http://www.springframework.org/schema/mvc   
+       http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd   
+       http://www.springframework.org/schema/tx   
+       http://www.springframework.org/schema/tx/spring-tx-4.3.xsd   
+       http://www.springframework.org/schema/aop 
+       http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+       http://www.springframework.org/schema/util 
+       http://www.springframework.org/schema/util/spring-util-4.3.xsd
+       http://www.springframework.org/schema/data/jpa 
+       http://www.springframework.org/schema/data/jpa/spring-jpa-1.3.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-4.3.xsd" >
+       
+       <!-- 引入properties文件(系统底层会读取配置文件，
+                        并将配置信息封装到Properties对象(本质上是一个map对象))-->
+       <util:properties id="cfg" 
+            location="classpath:configs.properties"/>
+       <!--
+         1)如何理解spring中的Bean对象？
+                  由spring框架管理的所有对象都是Bean对象。
+         2)这个Bean对象是何时创建的？(要看对象是否配置 延迟加载)
+         3)这个Bean对象的默认作用域是什么？(singleton)
+         4)Spring中的单例对象是何时销毁的？(容器关闭时销毁)
+       -->
+       <bean id="openDataSource"
+             class="com.jt.common.utils.OpenDataSource"
+             init-method="init"
+             destroy-method="close"
+             lazy-init="false"
+             scope="singleton">
+             <!-- 系统底层会根据constructor-arg元素个数调用
+                                    对应参数个数的构造函数，这种属性初始化方式
+                                    称之为构造注入(了解)-->
+             <constructor-arg value="10"/>
+             <constructor-arg value="100"/>
+             <!-- 系统底层创建对象以后会调用property元素
+                                    中name属性值对象的set方法为属性赋值 -->
+             <property name="Driver"
+                       value="#{cfg.jdbcDriver}"/>
+             <property name="Url" 
+                       value="#{cfg.jdbcUrl}"/>
+             <property name="username" 
+                       value="#{cfg.jdbcUser}"/>
+             <property name="Password" 
+                       value="#{cfg.jdbcPassword}"/>
+             
+       </bean> 
+       
+        <!--整合C3P0连接池
+                        快捷键：
+            1.ctrl+shift+t:快速打开一个类的查询窗口
+            2.ctrl+o:查看本类方法(假如还想查看父类方法
+                        可以继续点击ctrl+o)
+        -->
+        <bean id="c3p0" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+             <!-- 思考：如下property属性名的值如何查找?(看类中set方法) -->
+             <property name="driverClass" 
+                       value="#{cfg.jdbcDriver}"/>
+             <property name="jdbcUrl" 
+                       value="#{cfg.jdbcUrl}"/>
+             <property name="user" value="#{cfg.jdbcUser}"/>
+             <property name="password" 
+                       value="#{cfg.jdbcPassword}"/>
+        </bean>
+        
+        <!-- 整合Druid -->
+        
+        <bean id="druid" class="com.alibaba.druid.pool.DruidDataSource"
+              init-method="init" destroy-method="close" lazy-init="false">
+              <property name="DriverClassName" value="#{cfg.jdbcDriver}"/>
+              <property name="url" value="#{cfg.jdbcUrl}"/>
+              <property name="username"  value="#{cfg.jdbcUser}"/>
+              <property name="password"  value="#{cfg.jdbcPassword}"/>
+              <property name="MaxActive" value="#{cfg.jdbcMaxActive}"/>
+        </bean>
+       
+</beans>
+
+
+
+
+

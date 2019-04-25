@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+
+    PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+
+    "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	
+	<!-- 引入数据源的配置文件 
+		resource指定文件的位置
+	-->
+	<properties resource="db.properties"></properties>
+	
+	<!-- 设置别名 
+		type类的全路径
+		alias别名
+	-->
+	<typeAliases>
+		<typeAlias type="cn.tedu.pojo.User" 
+				 alias="User"/>
+	</typeAliases>
+
+	
+		<!--配置开发环境  
+		default用来设置默认的开发环境
+		可以包含很多的environment
+		-->
+	<environments default="test">
+		<!-- 测试环境 -->	
+		<environment id="test">
+			<!-- mybatis的事务交给jdbc来管理 -->
+			<transactionManager type="jdbc"></transactionManager>
+			
+			<!-- 配置数据源（连接池），池化的 -->
+			<dataSource type="pooled">
+			
+				<!-- 数据库的驱动名字 -->
+				<property name="driver" value="${driverClass}"/>
+				
+				<!-- 数据库的url地址 -->
+				<property name="url" value="${jdbcUrl}"/>
+				
+				<!-- 数据库的用户名 -->
+				<property name="username" value="${user}"/>
+				
+				<!-- 数据库的密码 -->
+				<property name="password" value="${password}"/>
+			</dataSource>
+		
+		</environment>
+		
+		<!-- 开发环境 	
+			<environment id="">
+			</environment>
+		-->
+	
+	</environments>
+	
+		<!-- 引入映射文件 -->
+	<mappers>
+		<!-- 引入UserMapper.xml
+		resource指定文件的位置，右键。copy qua...name 
+		-->
+		<mapper resource="mapper/UserMapper.xml"/>	
+		<mapper resource="mapper/InterfaceMapper.xml"/>	
+	</mappers>
+	
+	
+</configuration>    
+
+    
+    

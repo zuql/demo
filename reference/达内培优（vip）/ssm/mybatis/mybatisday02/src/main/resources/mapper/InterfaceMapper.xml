@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 映射文件，写SQL 
+namespace唯一标志
+注意：映射文件中的namespace的值
+将要是接口的包名+接口的类名
+-->
+<mapper namespace="cn.tedu.dao.UserMapperDao">
+	<!-- 查询所有记录 
+			id唯一标识
+		resultType把结果封装在对象上，写类的全路径-->
+	<select id="findAll" 
+			resultType="User">
+		
+		select * from user 
+	</select>
+	
+	<!-- 查询总记录数 -->
+	<select id="count" resultType="int">
+		select count(*) from user
+	</select>
+	
+	
+	<!-- 根据id查询记录2 -->
+	<select id="findOne" 
+			resultType="cn.tedu.pojo.User"
+			parameterType="int">
+		select * from user where id=#{id}
+	</select>
+
+	<!-- 新增一条记录 
+	动态获取值的方式：#{？？？}  ？？？是实体对象的属性名儿
+	parameterType 参数类型
+	-->
+	<insert id="save" 
+			parameterType="cn.tedu.pojo.User">
+		
+		insert into user values
+		(null,#{name},#{addr},#{age})
+	</insert>
+	
+	<!-- 修改指定记录 
+	动态取值：#{age}  age就是user对象的age属性
+	-->
+	<update id="gengxin" 
+			parameterType="cn.tedu.pojo.User">
+		
+		update user set age=#{age} 
+			where name=#{name}
+	</update>
+	
+	<!-- 删除指定记录 name是张慎政的记录
+	动态取值：#{name}  name就是user对象的name属性
+	-->
+	<delete id="del" parameterType="cn.tedu.pojo.User">
+		delete from user where name=#{name}
+	</delete>
+
+</mapper>  

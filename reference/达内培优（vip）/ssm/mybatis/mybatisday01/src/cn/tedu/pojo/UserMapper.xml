@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+
+     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+
+     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 映射文件
+namespace是该文件的唯一标识
+ -->
+<mapper namespace="userns">
+	
+	<!-- select 标签，用来完成一个查询的SQL
+	 		id是该SQL的唯一标识
+	 		resultType是指结果集要封装给哪个实体
+	 			值是类的全路径（包名+类名）
+	 -->
+	<select id="all" 
+	        resultType="cn.tedu.pojo.User">
+	        
+		select * from user
+	</select>
+	
+
+</mapper>   

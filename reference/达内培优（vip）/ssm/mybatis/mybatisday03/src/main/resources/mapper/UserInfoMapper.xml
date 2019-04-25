@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace的值=接口全路径 -->
+<mapper namespace="cn.tedu.dao.UserInfoDao">
+	
+	<!-- 开启二级缓存2 -->
+	<cache></cache>
+	
+	<!-- resultMap封装不规则的字段 
+		type：结果集要封装在哪个实体对象上
+			    就是这个对象的全路径（别名）
+		id：唯一标志
+		描述userinfo表的信息
+	-->
+	<resultMap type="UserInfo" id="userRM">
+		<!-- 配置主键信息，
+				column：表里的字段名
+				property：实体的属性名
+		-->
+		<id column="id" property="id"/>
+		<!-- 其他属性... -->
+		<result column="user_name" property="userName"/>
+		<result column="user_addr" property="userAddr"/>
+		<result column="user_age" property="userAge"/>
+	</resultMap>
+	
+	<!-- 绑定一对一的userextra的关系 
+		type：结果集要封装在哪个实体对象上
+			    就是这个对象的全路径（别名）
+		id：唯一标志
+		extends：继承指定的resultMap，通过id值
+	-->
+	<resultMap type="UserInfo" 
+				id="userextraRM"
+				extends="userRM">
+		<!--association+javaType一对一的对象描述 
+			property：是用户扩展对象的属性名
+			javaType：userExtra类的全路径
+		-->
+		<association property="userExtra"
+					 javaType="UserExtra">
+			<!-- 描述用户扩展对象的信息 -->
+			<id column="id" property="id"/>
+			<result column="work" property="work"/>
+			<result column="salary" property="salary"/>
+			<result column="user_id" property="userId"/>
+			
+		</association>
+	</resultMap>
+	
+	<!-- 查询用户对应的扩展信息 
+		resultMap：引用对应的resultMap，通过id定位
+	-->
+	<select id="findExtraByUser"
+			resultMap="userextraRM">
+		select * from 
+			user_info t1,
+			user_extra t2
+		where
+			t1.id=t2.user_id
+			and t1.id=#{id}
+	</select>
+	
+	<!-- 绑定一对多的对象关系的order
+		type：查询出来的结果要封装给哪个实体
+	-->
+	<resultMap type="UserInfo" 
+				id="orderRM"
+				extends="userRM">
+		<!-- collection+ofType描述多的一方orders 
+			property：在UserInfo对象中的属性名
+			ofType：是关联对象类的全路径
+		-->
+		<collection property="orders"
+					ofType="cn.tedu.pojo.Orders">
+			<!-- 描述关联对象orders的信息 
+				column：列明
+				property：属性名
+			-->
+			<id column="oid" property="id"/>
+			<result column="user_id" property="userId"/>
+			<result column="order_no" property="orderNo"/>
+			<result column="order_desc" property="orderDesc"/>
+			<result column="price" property="price"/>
+		</collection>
+	</resultMap>
+	
+	<!-- 根据用户id查询所有订单信息 
+		resultMap：引用对应的resultMap，通过id定位
+	-->
+	<select id="findOrdersByUser"
+			resultMap="orderRM">
+		select 
+			t1.id,
+			t1.user_name,
+			t1.user_addr,
+			t1.user_age,
+			t2.id as oid,
+			t2.user_id,
+			t2.order_no,
+			t2.order_desc,
+			t2.price
+		from 
+			user_info t1,
+			orders t2
+		where 
+			t1.id=t2.user_id
+		and 
+			t1.id=#{id}
+	</select>
+	
+	
+	
+	
+	
+
+</mapper>

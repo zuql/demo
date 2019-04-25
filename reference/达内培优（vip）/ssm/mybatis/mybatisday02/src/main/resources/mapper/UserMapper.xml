@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="usernp">
+	
+	<!-- 
+		<sql> + <include> 
+		查询user表中id是131的记录
+	-->
+	<sql id="columns">
+		id,name,addr,age
+	</sql>
+	
+	<select id="findOne" resultType="User">
+		select 
+			<include refid="columns"/>
+		 from user 
+		 <where>
+		 		id = #{id}
+		 </where>
+	</select>
+
+	<!-- if标签 -->
+	<select id="ifsql" resultType="User">
+		select 
+		<include refid="columns"/> 
+		from user
+		<where>
+			<if test="id!=null and id!=0">
+				id=#{id}
+			</if>
+			<if test="name!=null">
+				and name=#{name}
+			</if>
+			<if test="addr!=null">
+				and addr=#{addr}
+			</if>
+		</where>
+	</select>
+
+	<!-- set标签 -->
+	<update id="setsql">
+		update user 
+		<set>
+		 	age=10 
+		</set>
+		where id=131
+	</update>
+
+	<!-- foreach标签 array-->
+	<select id="foreacharray" 
+			resultType="User">
+		select * from user
+		where id in(
+			<!-- foreach用来遍历数组
+				collection指定数据的类型
+				separator拼接SQL时用的分隔符
+				item遍历时数据的别名
+			 -->
+			<foreach collection="array"
+					separator=","
+					item="o">
+				#{o}
+			</foreach>
+		)
+	</select>
+	
+
+	<!-- foreach标签 list-->
+	<delete id="foreachlist">
+		delete from user where id in 
+		<!-- open指SQL拼接时的左括号
+			close指SQL拼接时的右括号
+		 -->
+		<foreach collection="list" 
+				separator=","
+				item="o"
+				open="("
+				close=")">
+			#{o}
+		</foreach>
+	</delete>
+
+	<!-- foreach标签 map-->
+	<update id="foreachgengxin">
+		update user set age=18
+		where id in (
+			<!-- collection的值：
+				是测试类中传递的map中的key 
+			-->
+			<foreach collection="key"
+					separator=","
+					item="i">
+				#{i}
+			</foreach>
+		)
+	</update>
+
+
+
+
+</mapper>
+
