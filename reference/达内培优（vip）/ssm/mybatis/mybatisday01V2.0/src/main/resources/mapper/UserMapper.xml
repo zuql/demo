@@ -10,9 +10,7 @@ namespace唯一标志
 	<!-- 查询所有记录 
 			id唯一标识
 		resultType把结果封装在对象上，写类的全路径-->
-	<select id="findAll" 
-			resultType="cn.tedu.pojo.User">
-		
+	<select id="findAll" resultType="cn.tedu.pojo.User">
 		select * from user
 	</select>
 	
@@ -21,11 +19,11 @@ namespace唯一标志
 		select count(*) from user
 	</select>
 	
-	<!-- 根据id查询记录1 
+	<!-- 根据id查询记录1 -->
 	<select id="findOne" 
 			resultType="cn.tedu.pojo.User">
 		select * from user where id=127
-	</select>-->
+	</select>
 	
 	<!-- 根据id查询记录2 -->
 	<select id="findOne2" 

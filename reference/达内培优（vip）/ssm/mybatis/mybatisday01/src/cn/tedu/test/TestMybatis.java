@@ -25,20 +25,15 @@ public class TestMybatis {
 	@Test
 	public void hello() throws IOException{
 //		1，创建会话工厂
-		InputStream in = 
-				Resources.getResourceAsStream(
-						"sqlMapConfig.xml");
+		InputStream in = Resources.getResourceAsStream("sqlMapConfig.xml");
 				
-		SqlSessionFactory ssf = 
-				new SqlSessionFactoryBuilder()
-				.build(in);
+		SqlSessionFactory ssf = new SqlSessionFactoryBuilder().build(in);
 		
 //		2，创建sqlsession，执行SQL
 		SqlSession session = ssf.openSession();
 		
 		//定位SQL的位置namespace值.id值
-		List<User> list = 
-				session.selectList("userns.all");
+		List<User> list = session.selectList("userns.all");
 		
 //		3，处理结果
 		for (User user : list) {

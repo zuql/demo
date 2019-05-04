@@ -29,8 +29,7 @@ public class TestCrud {
 	public void init() {
 		try {
 			// 1,创建会话工厂
-			InputStream in = 
-					Resources.getResourceAsStream("sqlMapConfig.xml");
+			InputStream in = Resources.getResourceAsStream("sqlMapConfig.xml");
 			ssf = new SqlSessionFactoryBuilder().build(in);
 
 		} catch (IOException e) {
@@ -104,9 +103,7 @@ public class TestCrud {
 		//创建sqlSession，执行SQL
 		SqlSession session = ssf.openSession();
 		//namespace值.id值
-		User user =
-				session.selectOne(
-						"userns.findOne");
+		User user = session.selectOne("userns.findOne");
 		
 		//处理结果
 		System.out.println(user);
@@ -123,8 +120,7 @@ public class TestCrud {
 		SqlSession session = ssf.openSession();
 		//namespace值.id值
 		User user =
-				session.selectOne(
-						"userns.findOne2",129);
+				session.selectOne("userns.findOne2",129);
 		
 		//处理结果
 		System.out.println(user);
@@ -164,8 +160,7 @@ public class TestCrud {
 	@Test
 	public void gengxin(){
 		//1，创建sqlsession，执行SQL
-		SqlSession session = 
-				ssf.openSession(true);//true可以自动提交事务
+		SqlSession session = ssf.openSession(true);//true可以自动提交事务
 		
 		//利用SQLsession执行查询的SQL
 		User user = new User();

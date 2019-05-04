@@ -20,12 +20,10 @@
 			<dataSource type="pooled">
 			
 				<!-- 数据库的驱动名字 -->
-				<property name="driver" 
-						  value="com.mysql.jdbc.Driver"/>
+				<property name="driver" value="com.mysql.jdbc.Driver"/>
 				
 				<!-- 数据库的url地址 -->
-				<property name="url" 
-						value="jdbc:mysql:///mybatisdb"/>
+				<property name="url" value="jdbc:mysql://127.0.0.1:3308/mybatisdb"/>
 				
 				<!-- 数据库的用户名 -->
 				<property name="username" value="root"/>
